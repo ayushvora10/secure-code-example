@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<title>Secure Coding in Java</title>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    button {
+        float: right;
+        background-color: rgb(237, 30, 119);
+        border-radius: 5px;
+        color: rgb(255, 255, 255);
+        font-size: 1.2em;
+        border: none;
+        padding: 8px 24px;
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 8px;
+        cursor: pointer;
+
+        position: relative;
+        animation-duration: 2s;
+        animation-timing-function: ease-in;
+    }
+
+    button:hover {
+        background-color: rgb(215, 38, 114);
+    }
+
+    code {
+        font-size: 16px;
+        background-color: rgb(215, 38, 114, 0.25);
+        padding: 1px 2px;
+    }
+
+    .lds-dual-ring {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+    }
+    .lds-dual-ring:after {
+      content: " ";
+      display: block;
+      width: 8px;
+      height: 16px;
+      margin-top: -6px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      border-color: #fff transparent #fff transparent;
+      animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes shakeAnim {
+      0% {left: 0}
+      1% {left: -3px}
+      2% {left: 5px}
+      3% {left: -8px}
+      4% {left: 8px}
+      5% {left: -5px}
+      6% {left: 3px}
+      7% {left: 0}
+    }
+</style>
+
+<script src="/assets/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<body style="margin: 0;">
+    <header style="background-color: #1A0829; height: 120px;"></header>
+    <h1 style="margin-left: 64px;">Secure Coding in Java</h1>
+
+    <p style="margin-left: 64px; margin-bottom: 64px; width: 60%;">Alice, Security Lead, has been working with developers in various teams to mitigate vulnerabilities in their applications. Let's see what security issues are found in your Java service that need fixing.</p>
+
+    <section style="margin-left: 64px;">
+        <h1>Vulnerability #1 - Injection attacks</h1>
+
+        <div>
+            <div style="display: inline-block; width: 62%;">
+                <div id="ed1" style="height: 300px;">String query = "SELECT * FROM customers WHERE last_name = '" + lastName + "'";
+con.runQuery(query);
+</div>
+                <button>Test</button>
+            </div>
+            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
+                <p style="margin-top: 0;">Alice noticed that in the fetch-customers API, there's a possibility of a SQL injection in one of the queries. This can be fixed by parameterizing the query using <code>PreparedStatement</code>.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
+
+    <section style="margin-left: 64px;">
+        <h1>Vulnerability #2 - Observable Response Discrepancy</h1>
+
+        <div>
+            <div style="display: inline-block; width: 62%;">
+                <div id="ed2" style="height: 300px;">public String login(String username, String password) {
+    if (userExists(username)) {
+        if (passwordMatches(username, password)) {
+            return "login successful";
+        } else {
+            return "wrong password";
+        }
+    } else {
+        return "user does not exist";
+    }
+}</div>
+                <button id="onclickdaalispe">Test</button>
+            </div>
+            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
+                <p style="margin-top: 0;">For the user-login API, Alice noticed that it's easier for an attacker if the API clearly distinguishes between a username not existing, and an incorrect password. "It's better to keep the response vague", she says.</p>
+                <p>Fix this by returning <code>"invalid username or password"</code> both when a username was not found AND when the password was incorrect.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
+
+    <section style="margin-left: 64px;">
+        <h1>Vulnerability #3 - Xml eXternal Entity injection (XXE)</h1>
+
+        <div>
+            <div style="display: inline-block; width: 62%;">
+                <div id="ed3" style="height: 300px;">SaxHandler handler = new SaxHandler();
+SAXParserFactory factory = SAXParserFactory.newInstance();
+SAXParser parser = factory.newSAXParser();
+parser.parse(xmlString, handler);</div>
+                <button id="onclickdaalispe1">Test</button>
+            </div>
+            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
+                <p style="margin-top: 0;">One of the XML parsing sections in the code inadvertently allows external entity definitions. Set the required feature flags on the <code>factory</code> and the <code>parser</code> to fix this vulnerability.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
+
+    <section style="margin-left: 64px;">
+        <h1>Vulnerability #4 - Cross-site scripting (XSS)</h1>
+
+        <div>
+            <div style="display: inline-block; width: 62%;">
+                <div id="ed4" style="height: 300px;">public String getHtmlDiv(String productFeaturesHtml) {
+    return "&lt;div&gt;Here are the product's features: " + productFeaturesHtml + "&lt;/div&gt;";
+}</div>
+                <button>Test</button>
+            </div>
+            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
+                <p style="margin-top: 0;">Each product page on the website has a 'features' section which is designed by third-party sellers. "However, we need to prevent the HTML they supply from running any malicious scripts", says Alice.</p>
+                <p>Fix this by encoding the string <code>productFeaturesHtml</code> with <a href="https://github.com/OWASP/owasp-java-encoder" target="_blank">OWASP's Java Encoder</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
+
+    <section style="margin-left: 64px;">
+        <h1>Vulnerability #5 - Unneeded serialization</h1>
+
+        <div>
+            <div style="display: inline-block; width: 62%;">
+                <div id="ed5" style="height: 600px;">public class User {
+    private String name;
+    private String address;
+    private String country;
+    
+    public User(String name, String address, String country) {
+        this.name = name;
+        this.address = address;
+        this.country = country;
+    }
+    
+    public String toString() {
+        return "name=" + name + ";address=" + address + ";country=" + country;
+    }
+    
+    public String getCountryCookie {
+        return this.toString();
+    }
+}</div>
+                <button>Test</button>
+            </div>
+            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
+                <p style="margin-top: 0;">The website needs to set the user's country as a cookie. Alice noticed that currently, however, the whole 'User' object (unnecessarily including the user's name and address) is being set as three separate cookies -- where, only the 'country' cookie was required.</p>
+                <p>Change the <code>getCountryCookie</code> method to return just the country.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
+
+    <section style="margin-left: 64px;">
+        <h1>Vulnerability #6 - Incomplete Logging</h1>
+
+        <div>
+            <div style="display: inline-block; width: 62%;">
+                <div id="ed6" style="height: 400px;">public boolean login(String username, String password) {
+    if (authenticate(username, password)) {
+        return true;
+    } else {
+        incrementLoginAttempts(username);
+        if (loginAttempts(username) &gt; 5) {
+            Logger.log(
+                "failed login attempt by user: " + username +
+                "at " + System.currentTimeMillis()
+            );
+        }
+        
+        return false;
+    }
+}</div>
+                <button>Test</button>
+            </div>
+            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
+                <p style="margin-top: 0;">Some trials revealed that not all user login failures on the website were being logged -- only when a user failed to login more than 5 times did the log appear.</p>
+                <p>"An attacker may rely on trying several username-password combinations spread out over several days. Thus, it's better for our system to know each and every login failure, not just the frequently attempted ones", suggests Alice.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background-color: #1A0829; height: 180px; margin-top: 128px;"></footer>
+</body>
+
+<script>
+    var editor = ace.edit("ed1");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+    editor.setShowPrintMargin(false);
+    document.getElementById('ed1').style.fontSize = '16px';
+
+    var ed2 = ace.edit('ed2');
+    ed2.setTheme('ace/theme/monokai');
+    ed2.session.setMode('ace/mode/java');
+    ed2.setShowPrintMargin(false);
+    document.getElementById('ed2').style.fontSize = '16px';
+
+    var ed3 = ace.edit('ed3');
+    ed3.setTheme('ace/theme/monokai');
+    ed3.session.setMode('ace/mode/java');
+    ed3.setShowPrintMargin(false);
+    document.getElementById('ed3').style.fontSize = '16px';
+
+    var ed4 = ace.edit('ed4');
+    ed4.setTheme('ace/theme/monokai');
+    ed4.session.setMode('ace/mode/java');
+    ed4.setShowPrintMargin(false);
+    document.getElementById('ed4').style.fontSize = '16px';
+
+    var ed5 = ace.edit('ed5');
+    ed5.setTheme('ace/theme/monokai');
+    ed5.session.setMode('ace/mode/java');
+    ed5.setShowPrintMargin(false);
+    document.getElementById('ed5').style.fontSize = '16px';
+
+    var ed6 = ace.edit('ed6');
+    ed6.setTheme('ace/theme/monokai');
+    ed6.session.setMode('ace/mode/java');
+    ed6.setShowPrintMargin(false);
+    document.getElementById('ed6').style.fontSize = '16px';
+
+    document.getElementById('onclickdaalispe').onclick = async () => {
+        document.getElementById('onclickdaalispe').setAttribute('style', '');
+        document.getElementById('onclickdaalispe').innerHTML = '<div class="lds-dual-ring"></div>';
+
+        let x = await fetch('vul2', {
+            method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: ed2.getValue()
+        });
+
+        x = await x.text();
+
+        if (x === 'OK') {
+            document.getElementById('onclickdaalispe').innerHTML = '✔';
+            document.getElementById('onclickdaalispe').setAttribute('style', 'background-color: #027902');
+        } else {
+            document.getElementById('onclickdaalispe').innerHTML = 'Test';
+            document.getElementById('onclickdaalispe').setAttribute('style', 'animation-name: "shakeAnim"');
+        }
+    }
+
+    document.getElementById('onclickdaalispe1').onclick = async () => {
+        document.getElementById('onclickdaalispe1').setAttribute('style', '');
+        document.getElementById('onclickdaalispe1').innerHTML = '<div class="lds-dual-ring"></div>';
+
+        let x = await fetch('vul3', {
+            method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: ed3.getValue()
+        });
+
+        x = await x.text();
+
+        if (x === 'OK') {
+            document.getElementById('onclickdaalispe1').innerHTML = '✔';
+            document.getElementById('onclickdaalispe1').setAttribute('style', 'background-color: #027902');
+        } else {
+            document.getElementById('onclickdaalispe1').innerHTML = 'Test';
+            document.getElementById('onclickdaalispe1').setAttribute('style', 'animation-name: "shakeAnim"');
+        }
+    }
+</script>
+
