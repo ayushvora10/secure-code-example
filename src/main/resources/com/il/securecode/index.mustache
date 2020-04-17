@@ -151,13 +151,13 @@ XMLReader reader = parser.getXMLReader();</div>
 
         <div>
             <div style="display: inline-block; width: 62%;">
-                <div id="ed4" style="height: 300px;">public String getHtmlDiv(String productFeaturesHtml) {
-    return "&lt;div&gt;Here are the product's features: " + productFeaturesHtml + "&lt;/div&gt;";
+                <div id="ed4" style="height: 300px;">public String getHtmlDiv(String productFeatures) {
+    return "&lt;div&gt;Here are the product's features: " + productFeatures + "&lt;/div&gt;";
 }</div>
-                <button>Test</button>
+                <button id="onclickdaalispe2">Test</button>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
-                <p style="margin-top: 0;">Each product page on the website has a 'features' section which is designed by third-party sellers. "However, we need to prevent the HTML they supply from running any malicious scripts", says Alice.</p>
+                <p style="margin-top: 0;">Each product page on the website has a 'features' section written by third-party sellers. "However, we need to prevent whatever text they supply - from running any malicious scripts", says Alice.</p>
                 <p>Fix this by encoding the string <code>productFeaturesHtml</code> with <a href="https://github.com/OWASP/owasp-java-encoder" target="_blank">OWASP's Java Encoder</a>.</p>
             </div>
         </div>
@@ -306,6 +306,26 @@ XMLReader reader = parser.getXMLReader();</div>
         } else {
             document.getElementById('onclickdaalispe1').innerHTML = 'Test';
             document.getElementById('onclickdaalispe1').setAttribute('style', 'animation-name: "shakeAnim"');
+        }
+    }
+
+    document.getElementById('onclickdaalispe2').onclick = async () => {
+        document.getElementById('onclickdaalispe2').setAttribute('style', '');
+        document.getElementById('onclickdaalispe2').innerHTML = '<div class="lds-dual-ring"></div>';
+
+        let x = await fetch('vul4', {
+            method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: ed4.getValue()
+        });
+
+        x = await x.text();
+
+        if (x === 'OK') {
+            document.getElementById('onclickdaalispe2').innerHTML = '✔';
+            document.getElementById('onclickdaalispe2').setAttribute('style', 'background-color: #027902');
+        } else {
+            document.getElementById('onclickdaalispe2').innerHTML = 'Test';
+            document.getElementById('onclickdaalispe2').setAttribute('style', 'animation-name: "shakeAnim"');
         }
     }
 </script>

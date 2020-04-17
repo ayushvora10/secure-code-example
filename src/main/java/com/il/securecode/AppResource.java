@@ -140,4 +140,43 @@ public final class AppResource {
 
         return listener.getSummary().getTestsSucceededCount() == 1 ? "OK" : "NO";
     }
+
+    @Path("/vul4")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String vul4(final String code) {
+        final long shouldBeOkayForNow = System.currentTimeMillis();
+
+        final Object s = Reflect.compile(
+            "com.il.securecode.NewCompileTest" + shouldBeOkayForNow,
+            "package com.il.securecode;\n" +
+
+            "import org.owasp.encoder.Encode;\n" +
+            "import static org.junit.jupiter.api.Assertions.assertEquals;\n" +
+            "import org.junit.jupiter.api.Test;\n" +
+
+            "class NewCompileTest" + shouldBeOkayForNow +"{\n" +
+
+            code +
+
+            "  @Test\n" +
+            "  void checkEncoding(){\n" +
+            "    assertEquals(\n" +
+            "      \"<div>Here are the product's features: feature1, feature2, &lt;script&gt;some-script&lt;/script&gt;</div>\",\n" +
+            "      getHtmlDiv(\"feature1, feature2, <script>some-script</script>\")\n" +
+            "    );\n" +
+            "  }\n" +
+            "}\n"
+        ).create().get();
+
+        final LauncherDiscoveryRequest request = 
+            LauncherDiscoveryRequestBuilder.request().selectors(selectClass(s.getClass())).build();
+
+        final Launcher launcher = LauncherFactory.create();
+        final SummaryGeneratingListener listener = new SummaryGeneratingListener();
+        launcher.registerTestExecutionListeners(listener);
+        launcher.execute(request);
+
+        return listener.getSummary().getTestsSucceededCount() == 1 ? "OK" : "NO";
+    }
 }
