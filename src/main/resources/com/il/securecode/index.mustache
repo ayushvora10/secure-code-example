@@ -170,26 +170,18 @@ XMLReader reader = parser.getXMLReader();</div>
 
         <div>
             <div style="display: inline-block; width: 62%;">
-                <div id="ed5" style="height: 600px;">public class User {
-    private String name;
-    private String address;
-    private String country;
+                <div id="ed5" style="height: 600px;">String name;
+String address;
+String country;
     
-    public User(String name, String address, String country) {
-        this.name = name;
-        this.address = address;
-        this.country = country;
-    }
+public String toString() {
+    return "name=" + name + ";address=" + address + ";country=" + country;
+}
     
-    public String toString() {
-        return "name=" + name + ";address=" + address + ";country=" + country;
-    }
-    
-    public String getCountryCookie {
-        return this.toString();
-    }
+public String getCountryCookie() {
+    return this.toString();
 }</div>
-                <button>Test</button>
+                <button id="onclickdaalispe3">Test</button>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">The website needs to set the user's country as a cookie. Alice noticed that currently, however, the whole 'User' object (unnecessarily including the user's name and address) is being set as three separate cookies -- where, only the 'country' cookie was required.</p>
@@ -326,6 +318,26 @@ XMLReader reader = parser.getXMLReader();</div>
         } else {
             document.getElementById('onclickdaalispe2').innerHTML = 'Test';
             document.getElementById('onclickdaalispe2').setAttribute('style', 'animation-name: "shakeAnim"');
+        }
+    }
+
+    document.getElementById('onclickdaalispe3').onclick = async () => {
+        document.getElementById('onclickdaalispe3').setAttribute('style', '');
+        document.getElementById('onclickdaalispe3').innerHTML = '<div class="lds-dual-ring"></div>';
+
+        let x = await fetch('vul5', {
+            method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: ed5.getValue()
+        });
+
+        x = await x.text();
+
+        if (x === 'OK') {
+            document.getElementById('onclickdaalispe3').innerHTML = '✔';
+            document.getElementById('onclickdaalispe3').setAttribute('style', 'background-color: #027902');
+        } else {
+            document.getElementById('onclickdaalispe3').innerHTML = 'Test';
+            document.getElementById('onclickdaalispe3').setAttribute('style', 'animation-name: "shakeAnim"');
         }
     }
 </script>
