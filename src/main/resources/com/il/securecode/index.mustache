@@ -133,14 +133,13 @@ con.runQuery(query);
 
         <div>
             <div style="display: inline-block; width: 62%;">
-                <div id="ed3" style="height: 300px;">SaxHandler handler = new SaxHandler();
-SAXParserFactory factory = SAXParserFactory.newInstance();
+                <div id="ed3" style="height: 300px;">SAXParserFactory factory = SAXParserFactory.newInstance();
 SAXParser parser = factory.newSAXParser();
-parser.parse(xmlString, handler);</div>
+XMLReader reader = parser.getXMLReader();</div>
                 <button id="onclickdaalispe1">Test</button>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
-                <p style="margin-top: 0;">One of the XML parsing sections in the code inadvertently allows external entity definitions. Set the required feature flags on the <code>factory</code> and the <code>parser</code> to fix this vulnerability.</p>
+                <p style="margin-top: 0;">One of the XML parsing sections in the code inadvertently allows external entity definitions. Set the required feature flags on the <code>factory</code> and the <code>reader</code> to fix this vulnerability.</p>
             </div>
         </div>
     </section>

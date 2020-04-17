@@ -77,9 +77,8 @@ public final class AppResource {
         final SummaryGeneratingListener listener = new SummaryGeneratingListener();
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request);
-        final TestExecutionSummary summary = listener.getSummary();
 
-        return summary.getTestsSucceededCount() == 3 ? "OK" : "NO";
+        return listener.getSummary().getTestsSucceededCount() == 3 ? "OK" : "NO";
     }
 
     @Path("/vul3")
@@ -92,32 +91,41 @@ public final class AppResource {
             "com.il.securecode.NewCompileTest" + shouldBeOkayForNow,
             "package com.il.securecode;\n" +
 
-            "import static org.junit.jupiter.api.Assertions.assertEquals;\n" +
+            "import static org.junit.jupiter.api.Assertions.assertTrue;\n" +
             "import org.junit.jupiter.api.Test;\n" +
 
             "class NewCompileTest" + shouldBeOkayForNow +"{\n" +
 
-            "  static class SaxHandler {}\n" +
-            "  static class SAXParser { static void parse(String xml, SaxHandler handler) {} }\n" +
+            "  static class XMLReader {\n" +
+            "    boolean fSet;\n" +
+            "    void setFeature(String feature, boolean flag) {\n" +
+            "      if (feature == \"https://xml.org/sax/features/external-general-entities\" && flag == false) {\n" +
+            "        fSet = true;\n" +
+            "      }\n" +
+            "    }\n" +
+            "  }\n" +
+
+            "  static class SAXParser { XMLReader getXMLReader() { return new XMLReader(); } }\n" +
 
             "  static class SAXParserFactory {\n" +
-            "    boolean f1Set;\n" +
+            "    boolean fSet;\n" +
             "    static SAXParserFactory newInstance() { return new SAXParserFactory(); }\n" +
             "    static SAXParser newSAXParser() { return new SAXParser(); }\n" +
             "    void setFeature(String feature, boolean flag) {\n " +
             "      if (feature == \"https://xml.org/sax/features/external-general-entities\" && flag == false) {\n " +
-            "        f1Set = true;\n" +
+            "        fSet = true;\n" +
             "      }\n" +
             "    }\n " +
             "  }\n" +
             
-            "  void fn(String xmlString){\n" +
+            "  boolean fn(String xmlString){\n" +
             code +
+            "    return factory.fSet && reader.fSet;\n" +
             "  }\n" +
 
             "  @Test\n" +
-            "  void checkSuccessfulLogin(){\n" +
-            "    assertEquals(2, 2);\n" +
+            "  void checkFeatureFlagsSet(){\n" +
+            "    assertTrue(fn(\"<somexml></somexml>\"));\n" +
             "  }\n" +
             "}\n"
         ).create().get();
@@ -129,10 +137,7 @@ public final class AppResource {
         final SummaryGeneratingListener listener = new SummaryGeneratingListener();
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request);
-        final TestExecutionSummary summary = listener.getSummary();
 
-        System.out.println(summary.getTestsSucceededCount());
-
-        return "NO";
+        return listener.getSummary().getTestsSucceededCount() == 1 ? "OK" : "NO";
     }
 }
