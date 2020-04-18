@@ -185,7 +185,7 @@ public String getCountryCookie() {
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">The website needs to set the user's country as a cookie. Alice noticed that currently, however, the whole 'User' object (unnecessarily including the user's name and address) is being set as three separate cookies -- where, only the 'country' cookie was required.</p>
-                <p>Change the <code>getCountryCookie</code> method to return just the country.</p>
+                <p>Change the <code>getCountryCookie</code> method to return the cookie for just the country.</p>
             </div>
         </div>
     </section>
@@ -212,11 +212,11 @@ public String getCountryCookie() {
         return false;
     }
 }</div>
-                <button>Test</button>
+                <button id="onclickdaalispe4">Test</button>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">Some trials revealed that not all user login failures on the website were being logged -- only when a user failed to login more than 5 times did the log appear.</p>
-                <p>"An attacker may rely on trying several username-password combinations spread out over several days. Thus, it's better for our system to know each and every login failure, not just the frequently attempted ones", suggests Alice.</p>
+                <p>"An attacker may rely on trying several username-password combinations spread out over several days. Thus, it's better if we track <em>each and every</em> login failure, not just the frequently attempted ones", suggests Alice.</p>
             </div>
         </div>
     </section>
@@ -338,6 +338,26 @@ public String getCountryCookie() {
         } else {
             document.getElementById('onclickdaalispe3').innerHTML = 'Test';
             document.getElementById('onclickdaalispe3').setAttribute('style', 'animation-name: "shakeAnim"');
+        }
+    }
+
+    document.getElementById('onclickdaalispe4').onclick = async () => {
+        document.getElementById('onclickdaalispe4').setAttribute('style', '');
+        document.getElementById('onclickdaalispe4').innerHTML = '<div class="lds-dual-ring"></div>';
+
+        let x = await fetch('vul6', {
+            method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: ed6.getValue()
+        });
+
+        x = await x.text();
+
+        if (x === 'OK') {
+            document.getElementById('onclickdaalispe4').innerHTML = '✔';
+            document.getElementById('onclickdaalispe4').setAttribute('style', 'background-color: #027902');
+        } else {
+            document.getElementById('onclickdaalispe4').innerHTML = 'Test';
+            document.getElementById('onclickdaalispe4').setAttribute('style', 'animation-name: "shakeAnim"');
         }
     }
 </script>

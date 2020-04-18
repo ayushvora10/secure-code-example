@@ -20,6 +20,7 @@ import org.joor.Reflect;
 
 @Path("/")
 @Consumes(MediaType.TEXT_PLAIN)
+@Produces(MediaType.TEXT_PLAIN)
 public final class AppResource {
 
     @GET
@@ -30,7 +31,6 @@ public final class AppResource {
 
     @Path("/vul2")
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public String vul2(final String code) {
         final long shouldBeOkayForNow = System.currentTimeMillis();
 
@@ -83,7 +83,6 @@ public final class AppResource {
 
     @Path("/vul3")
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public String vul3(final String code) {
         final long shouldBeOkayForNow = System.currentTimeMillis();
 
@@ -144,7 +143,6 @@ public final class AppResource {
 
     @Path("/vul4")
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public String vul4(final String code) {
         final long shouldBeOkayForNow = System.currentTimeMillis();
 
@@ -183,7 +181,6 @@ public final class AppResource {
 
     @Path("/vul5")
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public String vul5(final String code) {
         final long shouldBeOkayForNow = System.currentTimeMillis();
 
@@ -203,6 +200,57 @@ public final class AppResource {
             "    final NewCompileTest" + shouldBeOkayForNow + " x = new NewCompileTest" + shouldBeOkayForNow + "();\n" +
             "    x.country=\"IN\";\n" +
             "    assertEquals(\"country=IN\", x.getCountryCookie());\n" +
+            "  }\n" +
+            "}\n"
+        ).create().get();
+
+        final LauncherDiscoveryRequest request = 
+            LauncherDiscoveryRequestBuilder.request().selectors(selectClass(s.getClass())).build();
+
+        final Launcher launcher = LauncherFactory.create();
+        final SummaryGeneratingListener listener = new SummaryGeneratingListener();
+        launcher.registerTestExecutionListeners(listener);
+        launcher.execute(request);
+
+        return listener.getSummary().getTestsSucceededCount() == 1 ? "OK" : "NO";
+    }
+
+    @Path("/vul6")
+    @POST
+    public String vul6(final String code) {
+        final long shouldBeOkayForNow = System.currentTimeMillis();
+
+        final Object s = Reflect.compile(
+            "com.il.securecode.NewCompileTest" + shouldBeOkayForNow,
+            "package com.il.securecode;\n" +
+
+            "import static org.junit.jupiter.api.Assertions.assertTrue;\n" +
+            "import static org.junit.jupiter.api.Assertions.assertFalse;\n" +
+            "import org.junit.jupiter.api.Test;\n" +
+
+            "final class NewCompileTest" + shouldBeOkayForNow +"{\n" +
+
+            "  private boolean authenticate(final String u, final String p) {\n" +
+            "    return u == \"valid_user\" && p == \"valid_password\";\n" +
+            "  }\n" +
+
+            "  private void incrementLoginAttempts(final String x) {}\n" +
+            "  private int loginAttempts(final String x) { return 1; }\n" +
+
+            "  static class Logger {\n" +
+            "    static boolean called;\n" +
+            "    static void log(final String x) { called = true; }\n" +
+            "  }\n" +
+
+            code +
+
+            "  @Test\n" +
+            "  void check() {\n" +
+            "    final NewCompileTest" + shouldBeOkayForNow + " x = new NewCompileTest" + shouldBeOkayForNow + "();\n" +
+            "    assertTrue(x.login(\"valid_user\", \"valid_password\"));\n" +
+            "    assertFalse(Logger.called);\n" +
+            "    assertFalse(x.login(\"invalid_user\", \"doesnt_matter\"));\n" +
+            "    assertTrue(Logger.called);\n" +
             "  }\n" +
             "}\n"
         ).create().get();
