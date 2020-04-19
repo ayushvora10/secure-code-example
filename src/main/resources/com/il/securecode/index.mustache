@@ -84,25 +84,7 @@
     <p style="margin-left: 64px; margin-bottom: 64px; width: 60%;">Alice, Security Lead, has been working with developers in various teams to mitigate vulnerabilities in their applications. Let's see what security issues are found in your Java service that need fixing.</p>
 
     <section style="margin-left: 64px;">
-        <h1>Vulnerability #1 - Injection attacks</h1>
-
-        <div>
-            <div style="display: inline-block; width: 62%;">
-                <div id="ed1" style="height: 300px;">String query = "SELECT * FROM customers WHERE last_name = '" + lastName + "'";
-con.runQuery(query);
-</div>
-                <button>Test</button>
-            </div>
-            <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
-                <p style="margin-top: 0;">Alice noticed that in the fetch-customers API, there's a possibility of a SQL injection in one of the queries. This can be fixed by parameterizing the query using <code>PreparedStatement</code>.</p>
-            </div>
-        </div>
-    </section>
-
-    <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
-
-    <section style="margin-left: 64px;">
-        <h1>Vulnerability #2 - Observable Response Discrepancy</h1>
+        <h1>Vulnerability #1 - Observable Response Discrepancy</h1>
 
         <div>
             <div style="display: inline-block; width: 62%;">
@@ -129,7 +111,7 @@ con.runQuery(query);
     <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
 
     <section style="margin-left: 64px;">
-        <h1>Vulnerability #3 - Xml eXternal Entity injection (XXE)</h1>
+        <h1>Vulnerability #2 - Xml eXternal Entity injection (XXE)</h1>
 
         <div>
             <div style="display: inline-block; width: 62%;">
@@ -147,7 +129,7 @@ XMLReader reader = parser.getXMLReader();</div>
     <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
 
     <section style="margin-left: 64px;">
-        <h1>Vulnerability #4 - Cross-site scripting (XSS)</h1>
+        <h1>Vulnerability #3 - Cross-site scripting (XSS)</h1>
 
         <div>
             <div style="display: inline-block; width: 62%;">
@@ -166,7 +148,7 @@ XMLReader reader = parser.getXMLReader();</div>
     <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
 
     <section style="margin-left: 64px;">
-        <h1>Vulnerability #5 - Unneeded serialization</h1>
+        <h1>Vulnerability #4 - Unneeded serialization</h1>
 
         <div>
             <div style="display: inline-block; width: 62%;">
@@ -193,7 +175,7 @@ public String getCountryCookie() {
     <hr style="width: 88%; color: #FFFFFF73; margin-top: 64px; margin-bottom: 64px;">
 
     <section style="margin-left: 64px;">
-        <h1>Vulnerability #6 - Incomplete Logging</h1>
+        <h1>Vulnerability #5 - Incomplete Logging</h1>
 
         <div>
             <div style="display: inline-block; width: 62%;">
@@ -225,12 +207,6 @@ public String getCountryCookie() {
 </body>
 
 <script>
-    var editor = ace.edit("ed1");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/java");
-    editor.setShowPrintMargin(false);
-    document.getElementById('ed1').style.fontSize = '16px';
-
     var ed2 = ace.edit('ed2');
     ed2.setTheme('ace/theme/monokai');
     ed2.session.setMode('ace/mode/java');
