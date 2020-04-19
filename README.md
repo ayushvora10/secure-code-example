@@ -15,7 +15,7 @@ This will run the app on your machine's port ```8080``` (assuming it's currently
 
 Open ```localhost:8080``` on your browser and play around.
 
-## TODOS
+## TODOs
 * Add some hints for the labs
 * Some variable names aren't explanatory
 * Some abstractions are possible to reduce the amount of code copy-paste
