@@ -7,5 +7,3 @@ WORKDIR /data/secure-code
 
 CMD ["java", "-jar", "secure-code-0.1.0-SNAPSHOT.jar", "server", "secure-code.yml"]
 
-EXPOSE 8080-8081
-
