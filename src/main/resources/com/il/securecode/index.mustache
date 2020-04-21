@@ -99,7 +99,8 @@
         return "user does not exist";
     }
 }</div>
-                <button id="onclickdaalispe">Test</button>
+            <button id="onclickdaalispe">Test</button>
+            <span id="ss1" style="margin-right: 16px;text-decoration: underline 1px;text-underline-offset: 4px;font-weight: bold;font-size: 0.8em;cursor: pointer; position: absolute; right: 42.5%; margin-top: 22px;">Show solution</span>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">For the user-login API, Alice noticed that it's easier for an attacker if the API clearly distinguishes between a username not existing, and an incorrect password. "It's better to keep the response vague", she says.</p>
@@ -119,6 +120,7 @@
 SAXParser parser = factory.newSAXParser();
 XMLReader reader = parser.getXMLReader();</div>
                 <button id="onclickdaalispe1">Test</button>
+                <span id="ss2" style="margin-right: 16px;text-decoration: underline 1px;text-underline-offset: 4px;font-weight: bold;font-size: 0.8em;cursor: pointer; position: absolute; right: 42.5%; margin-top: 22px;">Show solution</span>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">One of the XML parsing sections in the code inadvertently allows external entity definitions. Set the required feature flags on the <code>factory</code> and the <code>reader</code> to fix this vulnerability.</p>
@@ -137,6 +139,7 @@ XMLReader reader = parser.getXMLReader();</div>
     return "&lt;div&gt;Here are the product's features: " + productFeatures + "&lt;/div&gt;";
 }</div>
                 <button id="onclickdaalispe2">Test</button>
+                <span id="ss3" style="margin-right: 16px;text-decoration: underline 1px;text-underline-offset: 4px;font-weight: bold;font-size: 0.8em;cursor: pointer; position: absolute; right: 42.5%; margin-top: 22px;">Show solution</span>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">Each product page on the website has a 'features' section written by third-party sellers. "However, we need to prevent whatever text they supply - from running any malicious scripts", says Alice.</p>
@@ -164,6 +167,7 @@ public String getCountryCookie() {
     return this.toString();
 }</div>
                 <button id="onclickdaalispe3">Test</button>
+                <span id="ss4" style="margin-right: 16px;text-decoration: underline 1px;text-underline-offset: 4px;font-weight: bold;font-size: 0.8em;cursor: pointer; position: absolute; right: 42.5%; margin-top: 22px;">Show solution</span>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">The website needs to set the user's country as a cookie. Alice noticed that currently, however, the whole 'User' object (unnecessarily including the user's name and address) is being set as three separate cookies -- where, only the 'country' cookie was required.</p>
@@ -195,6 +199,7 @@ public String getCountryCookie() {
     }
 }</div>
                 <button id="onclickdaalispe4">Test</button>
+                <span id="ss5" style="margin-right: 16px;text-decoration: underline 1px;text-underline-offset: 4px;font-weight: bold;font-size: 0.8em;cursor: pointer; position: absolute; right: 42.5%; margin-top: 22px;">Show solution</span>
             </div>
             <div style="display: inline-block; width: 28%; margin-left: 64px; vertical-align: top;">
                 <p style="margin-top: 0;">Some trials revealed that not all user login failures on the website were being logged -- only when a user failed to login more than 5 times did the log appear.</p>
@@ -255,7 +260,7 @@ public String getCountryCookie() {
             document.getElementById('onclickdaalispe').innerHTML = 'Test';
             document.getElementById('onclickdaalispe').setAttribute('style', 'animation-name: "shakeAnim"');
         }
-    }
+    };
 
     document.getElementById('onclickdaalispe1').onclick = async () => {
         document.getElementById('onclickdaalispe1').setAttribute('style', '');
@@ -275,7 +280,7 @@ public String getCountryCookie() {
             document.getElementById('onclickdaalispe1').innerHTML = 'Test';
             document.getElementById('onclickdaalispe1').setAttribute('style', 'animation-name: "shakeAnim"');
         }
-    }
+    };
 
     document.getElementById('onclickdaalispe2').onclick = async () => {
         document.getElementById('onclickdaalispe2').setAttribute('style', '');
@@ -295,7 +300,7 @@ public String getCountryCookie() {
             document.getElementById('onclickdaalispe2').innerHTML = 'Test';
             document.getElementById('onclickdaalispe2').setAttribute('style', 'animation-name: "shakeAnim"');
         }
-    }
+    };
 
     document.getElementById('onclickdaalispe3').onclick = async () => {
         document.getElementById('onclickdaalispe3').setAttribute('style', '');
@@ -315,7 +320,7 @@ public String getCountryCookie() {
             document.getElementById('onclickdaalispe3').innerHTML = 'Test';
             document.getElementById('onclickdaalispe3').setAttribute('style', 'animation-name: "shakeAnim"');
         }
-    }
+    };
 
     document.getElementById('onclickdaalispe4').onclick = async () => {
         document.getElementById('onclickdaalispe4').setAttribute('style', '');
@@ -335,6 +340,65 @@ public String getCountryCookie() {
             document.getElementById('onclickdaalispe4').innerHTML = 'Test';
             document.getElementById('onclickdaalispe4').setAttribute('style', 'animation-name: "shakeAnim"');
         }
+    };
+
+    document.getElementById('ss1').onclick = () => {
+        ed2.setValue(`// Here's one solution:
+public String login(String username, String password) {
+    if (userExists(username)) {
+        if (passwordMatches(username, password)) {
+            return "login successful";
+        } else {
+            return "invalid username or password";
+        }
+    } else {
+        return "invalid username or password";
     }
+}`);
+    };
+
+    document.getElementById('ss2').onclick = () => {
+        ed3.setValue(`SAXParserFactory factory = SAXParserFactory.newInstance();
+factory.setFeature("https://xml.org/sax/features/external-general-entities", false);
+SAXParser parser = factory.newSAXParser();
+XMLReader reader = parser.getXMLReader();
+reader.setFeature("https://xml.org/sax/features/external-general-entities", false);`);
+    };
+
+    document.getElementById('ss3').onclick = () => {
+        ed4.setValue(`public String getHtmlDiv(String productFeatures) {
+    return "<div>Here are the product's features: " + Encode.forHtml(productFeatures) + "</div>";
+}`);
+    };
+
+    document.getElementById('ss4').onclick = () => {
+        ed5.setValue(`String name;
+String address;
+String country;
+    
+public String toString() {
+    return "name=" + name + ";address=" + address + ";country=" + country;
+}
+    
+public String getCountryCookie() {
+    return "country=" + country;
+}`);
+    };
+
+    document.getElementById('ss5').onclick = () => {
+        ed6.setValue(`// Here's one solution:
+public boolean login(String username, String password) {
+    if (authenticate(username, password)) {
+        return true;
+    } else {
+        Logger.log(
+            "failed login attempt by user: " + username +
+            "at " + System.currentTimeMillis()
+        );
+        
+        return false;
+    }
+}`);
+    };
 </script>
 
