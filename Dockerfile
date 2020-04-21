@@ -5,7 +5,5 @@ COPY target/secure-code-0.1.0-SNAPSHOT.jar /data/secure-code/secure-code-0.1.0-S
 
 WORKDIR /data/secure-code
 
-CMD ["java", "-jar", "secure-code-0.1.0-SNAPSHOT.jar", "server", "secure-code.yml"]
-
-EXPOSE 8080-8081
+CMD java -Ddw.server.applicationConnectors[0].port=$PORT -jar secure-code-0.1.0-SNAPSHOT.jar server secure-code.yml
 
