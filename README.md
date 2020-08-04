@@ -22,3 +22,4 @@ Open ```localhost:8080``` on your browser and play around.
 * Add some hints for the labs
 * Some variable names aren't explanatory
 * Some abstractions are possible to reduce the amount of code copy-paste
+* The classname generation for test classes is also currently based on current-epoch (will not scale)
