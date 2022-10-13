@@ -1,9 +1,6 @@
 # secure-code-example
 Sample web-app containing some labs for teaching secure coding
 
-## Try it
-https://secure-code-example.herokuapp.com/
-
 ## How to run
 After cloning repo to your machine, at the project root directory, run:
 
